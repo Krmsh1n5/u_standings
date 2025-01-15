@@ -11,6 +11,7 @@ class StandingsPage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppbar(),
+        bottomNavigationBar: _buildNavigationBar(),
         body: Container(
           width: double.infinity,
           padding:
@@ -19,7 +20,6 @@ class StandingsPage extends StatelessWidget {
               EdgeInsets.only(
             // Add custom padding on Android
             left: 16.h,
-            top: 68.h,
             right: 16.h,
           ),
           child: SingleChildScrollView(
@@ -33,7 +33,6 @@ class StandingsPage extends StatelessWidget {
                 _buildButton(),
                 SizedBox(height: 4.h),
                 _buildStandingsTable(),
-                SizedBox(height: 10.h),
               ],
             ),
           ),
@@ -60,14 +59,14 @@ class StandingsPage extends StatelessWidget {
   }
 
   _buildTitleWidget() {
-    return SizedBox(
+    return Container(
       width: double.maxFinite,
       height: 48.h,
+      alignment: Alignment.centerLeft,
       child: Text(
         "Explore the leaderboard rankings!",
         style: TextStyle(
           fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -167,6 +166,24 @@ class StandingsPage extends StatelessWidget {
   }
 
   _buildStandingsTable() {
-    return Container(width: double.maxFinite, height: 437.h, color: Colors.red);
+    return Container(width: double.maxFinite, height: 600.h, color: Colors.red);
+  }
+
+  _buildNavigationBar() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(16.h, 10.h, 16.h, 34.h),
+      child: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.leaderboard),
+            label: "Standings",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calculate),
+            label: "Calculator",
+          ),
+        ],
+      ),
+    );
   }
 }
