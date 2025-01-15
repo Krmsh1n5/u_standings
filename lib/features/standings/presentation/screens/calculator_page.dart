@@ -169,7 +169,59 @@ class CalculatorPage extends StatelessWidget {
   }
 
   _buildCalculatorFields() {
-    return Container(width: double.maxFinite, height: 600.h, color: Colors.red);
+    // Example data for the list
+    final List<Map<String, String>> exams = [
+      {'title': 'AOM: First Written Exam', 'credits': '0.67'},
+      {'title': 'Mathematics: Midterm', 'credits': '1.00'},
+      {'title': 'Physics: Lab', 'credits': '0.50'},
+      {'title': 'CS: Final', 'credits': '1.00'},
+      {'title': 'English: Presentation', 'credits': '0.33'},
+      {'title': 'History: Midterm', 'credits': '0.50'},
+      {'title': 'PE: Final', 'credits': '0.50'},
+    ];
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics:
+          NeverScrollableScrollPhysics(), // Prevents internal scrolling if nested in another scrollable view
+      itemCount: exams.length,
+      itemBuilder: (context, index) {
+        final exam = exams[index];
+        return Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: _buildGradeInputWidget(
+            title: exam['title']!,
+            credits: exam['credits']!,
+          ),
+        );
+      },
+    );
+  }
+
+  _buildGradeInputWidget({required String title, required String credits}) {
+    return SizedBox(
+      height: 70.h,
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title),
+                Text("Credits: $credits"),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 70.w,
+            child: TextField(
+              keyboardType: TextInputType.number,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   _buildCalculateButton() {

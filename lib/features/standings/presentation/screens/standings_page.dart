@@ -7,6 +7,21 @@ class StandingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> leaderboardData = [
+      {'rank': 1, 'name': 'John Doe', 'score': 17.9, 'change': 2},
+      {'rank': 2, 'name': 'Jane Doe', 'score': 17.8, 'change': -1},
+      {'rank': 3, 'name': '22322555', 'score': 17.6, 'change': 1},
+      {'rank': 4, 'name': 'James Brown', 'score': 17.58, 'change': 0},
+      {'rank': 5, 'name': 'Lebron James', 'score': 17.5, 'change': 0},
+      {'rank': 6, 'name': 'James Harden', 'score': 17.4, 'change': 0},
+      {'rank': 7, 'name': '22322574', 'score': 17.3, 'change': 0},
+      {'rank': 8, 'name': 'Toghrul Mardiyev', 'score': 17.2, 'change': 0},
+      {'rank': 9, 'name': 'Veli Tahmazov', 'score': 17.15, 'change': 0},
+      {'rank': 10, 'name': 'Kamal Yalchin', 'score': 17.1, 'change': 0},
+      {'rank': 11, 'name': '22322579', 'score': 17.0, 'change': 0},
+      {'rank': 12, 'name': 'Farid Valiev', 'score': 16.9, 'change': 0},
+    ];
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -31,8 +46,8 @@ class StandingsPage extends StatelessWidget {
                 _buildHeadingAndSubheadingText(),
                 SizedBox(height: 4.h),
                 _buildSelectButton(),
-                SizedBox(height: 4.h),
-                _buildStandingsTable(),
+                SizedBox(height: 8.h),
+                _buildStandingsTable(leaderboardData),
                 SizedBox(height: 2.h),
               ],
             ),
@@ -166,9 +181,102 @@ class StandingsPage extends StatelessWidget {
     );
   }
 
-  _buildStandingsTable() {
-    return Container(width: double.maxFinite, height: 600.h, color: Colors.red);
-  }
+Widget _buildStandingsTable(List<Map<String, dynamic>> data) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 16.h),
+    child: Column(
+      children: data.map((item) {
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Rank Column
+              SizedBox(
+                width: 50.w,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    item['rank'].toString(),
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              // Name Column
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      item['name'],
+                      style: TextStyle(fontSize: 16.sp),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ),
+              // Score Column
+              SizedBox(
+                width: 50.w,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    item['score'].toStringAsFixed(2),
+                    style: TextStyle(fontSize: 16.sp),
+                  ),
+                ),
+              ),
+              // Change Indicator Column
+              SizedBox(
+                width: 70.w,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: item['change'] != 0
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              item['change'] > 0
+                                  ? Icons.arrow_upward
+                                  : Icons.arrow_downward,
+                              color: item['change'] > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                              size: 16.sp,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              item['change'].abs().toString(),
+                              style: TextStyle(
+                                color: item['change'] > 0
+                                    ? Colors.green
+                                    : Colors.red,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          '-',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
+
 
   _buildNavigationBar() {
     return Container(
