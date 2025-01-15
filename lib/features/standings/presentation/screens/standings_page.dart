@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:u_standings/features/standings/presentation/widgets/appbar.dart';
+import 'package:u_standings/features/standings/presentation/widgets/custom_appbar.dart';
 
 class StandingsPage extends StatelessWidget {
   const StandingsPage({super.key});
@@ -30,9 +30,10 @@ class StandingsPage extends StatelessWidget {
                 SizedBox(height: 4.h),
                 _buildHeadingAndSubheadingText(),
                 SizedBox(height: 4.h),
-                _buildButton(),
+                _buildSelectButton(),
                 SizedBox(height: 4.h),
                 _buildStandingsTable(),
+                SizedBox(height: 2.h),
               ],
             ),
           ),
@@ -44,7 +45,7 @@ class StandingsPage extends StatelessWidget {
   _buildAppbar() {
     return CustomAppBar(
       title: Padding(
-        padding: EdgeInsets.only(left: 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.h),
         child: Text(
           'Standings',
         ),
@@ -146,7 +147,7 @@ class StandingsPage extends StatelessWidget {
             width: double.maxFinite,
             height: 16.h,
             child: Text(
-              "Select a semester and a cohort",
+              "Select a faculty and/or a cohort",
             ),
           ),
         ],
@@ -154,7 +155,7 @@ class StandingsPage extends StatelessWidget {
     );
   }
 
-  _buildButton() {
+  _buildSelectButton() {
     return SizedBox(
       height: 32.h,
       width: double.maxFinite,

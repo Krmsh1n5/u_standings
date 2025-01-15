@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:u_standings/features/standings/presentation/screens/calculator_page.dart';
 import 'package:u_standings/features/standings/presentation/screens/standings_page.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const StandingsPage(),
+        home: const CalculatorPage(),
       ),
     );
   }
