@@ -26,7 +26,6 @@ class StandingsPage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppbar(),
-        bottomNavigationBar: _buildNavigationBar(),
         body: Container(
           width: double.infinity,
           padding:
@@ -181,117 +180,98 @@ class StandingsPage extends StatelessWidget {
     );
   }
 
-Widget _buildStandingsTable(List<Map<String, dynamic>> data) {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16.h),
-    child: Column(
-      children: data.map((item) {
-        return Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Rank Column
-              SizedBox(
-                width: 50.w,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    item['rank'].toString(),
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              // Name Column
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+  Widget _buildStandingsTable(List<Map<String, dynamic>> data) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.h),
+      child: Column(
+        children: data.map((item) {
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Rank Column
+                SizedBox(
+                  width: 50.w,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      item['name'],
-                      style: TextStyle(fontSize: 16.sp),
-                      overflow: TextOverflow.ellipsis,
+                      item['rank'].toString(),
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // Score Column
-              SizedBox(
-                width: 50.w,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    item['score'].toStringAsFixed(2),
-                    style: TextStyle(fontSize: 16.sp),
+                // Name Column
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        item['name'],
+                        style: TextStyle(fontSize: 16.sp),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              // Change Indicator Column
-              SizedBox(
-                width: 70.w,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: item['change'] != 0
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
-                              item['change'] > 0
-                                  ? Icons.arrow_upward
-                                  : Icons.arrow_downward,
-                              color: item['change'] > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                              size: 16.sp,
-                            ),
-                            SizedBox(width: 4.w),
-                            Text(
-                              item['change'].abs().toString(),
-                              style: TextStyle(
+                // Score Column
+                SizedBox(
+                  width: 50.w,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      item['score'].toStringAsFixed(2),
+                      style: TextStyle(fontSize: 16.sp),
+                    ),
+                  ),
+                ),
+                // Change Indicator Column
+                SizedBox(
+                  width: 70.w,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: item['change'] != 0
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Icon(
+                                item['change'] > 0
+                                    ? Icons.arrow_upward
+                                    : Icons.arrow_downward,
                                 color: item['change'] > 0
                                     ? Colors.green
                                     : Colors.red,
-                                fontSize: 14.sp,
+                                size: 16.sp,
                               ),
+                              SizedBox(width: 4.w),
+                              Text(
+                                item['change'].abs().toString(),
+                                style: TextStyle(
+                                  color: item['change'] > 0
+                                      ? Colors.green
+                                      : Colors.red,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Text(
+                            '-',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey,
                             ),
-                          ],
-                        )
-                      : Text(
-                          '-',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.grey,
                           ),
-                        ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    ),
-  );
-}
-
-
-  _buildNavigationBar() {
-    return Container(
-      padding: EdgeInsets.fromLTRB(16.h, 10.h, 16.h, 34.h),
-      child: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.leaderboard),
-            label: "Standings",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calculate),
-            label: "Calculator",
-          ),
-        ],
+              ],
+            ),
+          );
+        }).toList(),
       ),
     );
   }

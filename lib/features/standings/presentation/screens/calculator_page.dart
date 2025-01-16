@@ -4,6 +4,7 @@ import 'package:u_standings/features/standings/presentation/widgets/custom_appba
 
 class CalculatorPage extends StatelessWidget {
   const CalculatorPage({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,6 @@ class CalculatorPage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppbar(),
-        bottomNavigationBar: _buildNavigationBar(),
         body: Container(
           width: double.infinity,
           padding:
@@ -231,24 +231,6 @@ class CalculatorPage extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {},
         child: Text("Calculate"),
-      ),
-    );
-  }
-
-  _buildNavigationBar() {
-    return Container(
-      padding: EdgeInsets.fromLTRB(16.h, 10.h, 16.h, 34.h),
-      child: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.leaderboard),
-            label: "Standings",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calculate),
-            label: "Calculator",
-          ),
-        ],
       ),
     );
   }
