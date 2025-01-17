@@ -1,0 +1,58 @@
+import 'package:u_standings/features/standings/domain/entities/cohort_semester.dart';
+import 'package:u_standings/features/standings/domain/entities/exam.dart';
+
+List<CohortSemester> cohortsSemesters = [
+  // L0
+  CohortSemester(name: 'L0 S1', exams: []),
+  CohortSemester(name: 'L0 S2', exams: []),
+  // L1
+  CohortSemester(name: 'L1 CS S1', exams: [
+    Exam(title: 'Notebook', credits: 1),
+    Exam(title: 'Math Midterm', credits: 2),
+    Exam(title: 'Math Final', credits: 3),
+    Exam(title: 'Language Midterm', credits: 3 * 2 / 8),
+    Exam(title: 'Language Speaking', credits: 3 * 3 / 8),
+    Exam(title: 'Language Final', credits: 3 * 3 / 8),
+    Exam(title: 'Fluid mechanics', credits: 6 * 1 / 5),
+    Exam(title: 'Thermodynamics', credits: 6 * 2 / 5),
+    Exam(title: 'Point mechanics', credits: 6 * 2 / 5),
+    Exam(title: 'AoM Midterm', credits: 2 * 1 / 3),
+    Exam(title: 'AoM Final', credits: 2 * 2 / 3),
+    Exam(title: 'Chem Lab Evaluated PW', credits: 2 * 1 / 2),
+    Exam(title: 'Chem Lab Report', credits: 2 * 0.5 / 2),
+    Exam(title: 'Chem Lab Behavior/Notebook', credits: 2 * 0.5 / 2),
+    Exam(title: 'Frontend Final', credits: 11 * 1 / 4 * 0.5),
+    Exam(title: 'Frontend Participation', credits: 11 * 1 / 4 * 0.1),
+    Exam(title: 'Frontend Project', credits: 11 * 1 / 4 * 0.4),
+    Exam(title: 'DSA Final', credits: 11 * 2 / 4 * 0.5),
+    Exam(title: 'DSA Project&PWs', credits: 11 * 2 / 4 * 0.5),
+    Exam(title: 'CSPC Midterm', credits: 11 * 1 / 4 * 0.2),
+    Exam(title: 'CSPC PWs', credits: 11 * 1 / 4 * 0.4),
+    Exam(title: 'CSPC Final', credits: 11 * 1 / 4 * 0.4),
+  ]),
+  CohortSemester(name: 'L1 CS S2', exams: []),
+  CohortSemester(name: 'L1 CE S1', exams: []),
+  CohortSemester(name: 'L1 CE S2', exams: []),
+  CohortSemester(name: 'L1 PE S1', exams: []),
+  CohortSemester(name: 'L1 PE S2', exams: []),
+  CohortSemester(name: 'L1 GE S1', exams: []),
+  CohortSemester(name: 'L1 GE S2', exams: []),
+  // L2
+  CohortSemester(name: 'L2 CS S1', exams: []),
+  CohortSemester(name: 'L2 CS S2', exams: []),
+  CohortSemester(name: 'L2 CE S1', exams: []),
+  CohortSemester(name: 'L2 CE S2', exams: []),
+  CohortSemester(name: 'L2 PE S1', exams: []),
+  CohortSemester(name: 'L2 PE S2', exams: []),
+  CohortSemester(name: 'L2 GE S1', exams: []),
+  CohortSemester(name: 'L2 GE S2', exams: []),
+  // L3
+  CohortSemester(name: 'L3 CS S1', exams: []),
+  CohortSemester(name: 'L3 CS S2', exams: []),
+  CohortSemester(name: 'L3 CE S1', exams: []),
+  CohortSemester(name: 'L3 CE S2', exams: []),
+  CohortSemester(name: 'L3 PE S1', exams: []),
+  CohortSemester(name: 'L3 PE S2', exams: []),
+  CohortSemester(name: 'L3 GE S1', exams: []),
+  CohortSemester(name: 'L3 GE S2', exams: []),
+];

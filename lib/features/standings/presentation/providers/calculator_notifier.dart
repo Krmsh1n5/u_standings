@@ -1,47 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:u_standings/features/standings/domain/usecases/get_calculated_average.dart';
+import 'package:u_standings/features/standings/domain/usecases/get_exams.dart';
 
 class CalculatorProvider extends ChangeNotifier {
   // State variables
   String? selectedCohortSemester;
+  List<Map<String, String>>? exams;
   double? calculatedAverage;
 
-  // Cohort/Semester options
-  final List<String> cohortsSemesters = [
-    'L0 S1',
-    'L0 S2',
-    'L1 CS S1',
-    'L1 CS S2',
-    'L1 CE S1',
-    'L1 CE S2',
-    'L2',
-    'L3',
-    'L4',
-  ];
-
-  // Example mapping of cohort/semester to exam data
-  final Map<String, List<Map<String, String>>> examData = {
-    'L1 CS S1': [
-      {'title': 'DSA 1 Written Exam', 'credits': '2.75'},
-      {'title': 'DSA 1 Final Project and PWs', 'credits': '2.75'},
-      {'title': 'Frontend Written Exam', 'credits': '1.3'},
-    ],
-    'L1 CE S1': [
-      {'title': 'TOM 1 Midterm', 'credits': '1.5'},
-      {'title': 'TOM 1 Final', 'credits': '2'},
-    ],
-    // Add other cohorts/semesters here
-  };
+  // Use Cases
+  GetCalculatedAverageUseCase getCalculatedAverage = GetCalculatedAverageUseCase();
+  GetExamsUseCase getExams = GetExamsUseCase();
 
   final Map<String, double> grades = {}; // Stores user inputs for grades
-
-  // Fetch exams for the selected cohort/semester
-  List<Map<String, String>> get currentExams {
-    return examData[selectedCohortSemester] ?? [];
-  }
 
   // Update selected cohort and/or semester
   void updateCohort(String cohortSemester) {
     selectedCohortSemester = cohortSemester;
+    exams = getExams(selectedCohortSemester);
     calculatedAverage = null;
     notifyListeners();
   }
@@ -52,24 +28,7 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void calculateAverage() {
-    if (grades.isNotEmpty) {
-      double totalCredits = 0;
-      double weightedSum = 0;
-
-      for (var exam in currentExams) {
-        final title = exam['title']!;
-        final credits = double.parse(exam['credits']!);
-
-        if (grades.containsKey(title)) {
-          weightedSum += grades[title]! * credits;
-          totalCredits += credits;
-        }
-      }
-
-      calculatedAverage = totalCredits > 0 ? weightedSum / totalCredits : 0;
-    } else {
-      calculatedAverage = 0;
-    }
+    calculatedAverage = getCalculatedAverage(grades, selectedCohortSemester ?? 'L0 S1');
     notifyListeners();
   }
 }
