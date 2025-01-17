@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:u_standings/features/standings/presentation/providers/calculator_notifier.dart';
 import 'package:u_standings/features/standings/presentation/widgets/custom_appbar.dart';
 import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
 
 class CalculatorPage extends StatelessWidget {
   const CalculatorPage({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<CalculatorProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -31,11 +34,14 @@ class CalculatorPage extends StatelessWidget {
                 SizedBox(height: 4.h),
                 _buildHeadingAndSubheadingText(),
                 SizedBox(height: 4.h),
-                _buildSelectButton(),
+                _buildSelectButton(context),
                 SizedBox(height: 4.h),
-                _buildCalculatorFields(),
+                _buildCalculatorFields(context),
                 SizedBox(height: 4.h),
-                _buildCalculateButton(),
+                if (provider.calculatedAverage != null)
+                  _buildCalculatedAverageBox(context),
+                SizedBox(height: 4.h),
+                _buildCalculateButton(context),
                 SizedBox(height: 2.h),
               ],
             ),
@@ -158,32 +164,34 @@ class CalculatorPage extends StatelessWidget {
     );
   }
 
-  _buildSelectButton() {
+  _buildSelectButton(BuildContext context) {
+    final provider = Provider.of<CalculatorProvider>(context);
+
     return SizedBox(
       height: 32.h,
       width: double.maxFinite,
       child: CohortSemesterSelectorButton(
-        title: 'Select Cohort',
-        staticOptions: ['L0', 'L1 - CS', 'L1 - CE', 'L2', 'L3'],
+        title: provider.selectedCohortSemester ?? 'Select Faculty/Cohort',
+        staticOptions: provider.cohortsSemesters,
         onOptionSelected: (selectedOption) {
-          print('Selected in Standings: $selectedOption');
-          // Handle selection (e.g., update Provider)
+          provider.updateCohort(selectedOption);
         },
       ),
     );
   }
 
-  _buildCalculatorFields() {
-    // Example data for the list
-    final List<Map<String, String>> exams = [
-      {'title': 'AOM: First Written Exam', 'credits': '0.67'},
-      {'title': 'Mathematics: Midterm', 'credits': '1.00'},
-      {'title': 'Physics: Lab', 'credits': '0.50'},
-      {'title': 'CS: Final', 'credits': '1.00'},
-      {'title': 'English: Presentation', 'credits': '0.33'},
-      {'title': 'History: Midterm', 'credits': '0.50'},
-      {'title': 'PE: Final', 'credits': '0.50'},
-    ];
+  _buildCalculatorFields(BuildContext context) {
+    final provider = Provider.of<CalculatorProvider>(context);
+    final exams = provider.currentExams;
+
+    if (exams.isEmpty) {
+      return Center(
+        child: Text(
+          'No exams available for the selected cohort/semester.',
+          style: TextStyle(fontSize: 16),
+        ),
+      );
+    }
 
     return ListView.builder(
       shrinkWrap: true,
@@ -197,13 +205,20 @@ class CalculatorPage extends StatelessWidget {
           child: _buildGradeInputWidget(
             title: exam['title']!,
             credits: exam['credits']!,
+            context: context,
           ),
         );
       },
     );
   }
 
-  _buildGradeInputWidget({required String title, required String credits}) {
+  _buildGradeInputWidget({
+    required String title,
+    required String credits,
+    required BuildContext context,
+  }) {
+    final provider = Provider.of<CalculatorProvider>(context);
+
     return SizedBox(
       height: 70.h,
       width: double.infinity,
@@ -222,6 +237,10 @@ class CalculatorPage extends StatelessWidget {
             width: 70.w,
             child: TextField(
               keyboardType: TextInputType.number,
+              onChanged: (value) {
+                final grade = double.tryParse(value) ?? 0.0;
+                provider.updateGrade(title, grade);
+              },
             ),
           ),
         ],
@@ -229,12 +248,29 @@ class CalculatorPage extends StatelessWidget {
     );
   }
 
-  _buildCalculateButton() {
+  _buildCalculatedAverageBox(BuildContext context) {
+    final provider = Provider.of<CalculatorProvider>(context);
+
+    return SizedBox(
+      height: 32.h,
+      width: double.maxFinite,
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          provider.calculatedAverage.toString(),
+        ),
+      ),
+    );
+  }
+
+  _buildCalculateButton(BuildContext context) {
+    final provider = Provider.of<CalculatorProvider>(context);
+
     return SizedBox(
       height: 32.h,
       width: double.maxFinite,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: provider.calculateAverage,
         child: Text("Calculate"),
       ),
     );
