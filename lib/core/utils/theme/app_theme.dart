@@ -27,6 +27,8 @@ class ThemeHelper {
     var colorScheme =
         _supportedColorScheme[_appTheme] ?? ColorSchemes.lightCodeColorScheme;
     return ThemeData(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       visualDensity: VisualDensity.standard,
       colorScheme: colorScheme,
       scaffoldBackgroundColor:
@@ -67,6 +69,12 @@ class ThemeHelper {
         thickness: 1,
         space: 1,
         color: _getThemeColors().blue50,
+      ),
+      scrollbarTheme: ScrollbarThemeData(
+        thumbVisibility: WidgetStateProperty.all(false),
+        trackVisibility: WidgetStateProperty.all(false),
+        thumbColor: WidgetStateProperty.all(Colors.transparent),
+        trackColor: WidgetStateProperty.all(Colors.transparent),
       ),
     );
   }

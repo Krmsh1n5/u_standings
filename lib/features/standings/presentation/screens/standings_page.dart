@@ -63,7 +63,7 @@ class StandingsPage extends StatelessWidget {
       title: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.h),
         child: Text(
-          'Standings',
+          'U Standings',
         ),
       ),
       actions: [

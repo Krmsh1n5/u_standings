@@ -95,7 +95,7 @@ class AppDecoration {
       padding: WidgetStateProperty.resolveWith<EdgeInsetsGeometry?>(
         (states) => EdgeInsets.all(4.h),
       ),
-      elevation: WidgetStateProperty.all(1.0),
+      elevation: WidgetStateProperty.all(2.0),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadiusStyle.roundedBorder8,

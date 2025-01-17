@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:u_standings/core/utils/constants/cohorts_semesters_data.dart';
+import 'package:u_standings/core/utils/theme/app_decoration.dart';
+import 'package:u_standings/core/utils/theme/custom_text_styles.dart';
 import 'package:u_standings/features/standings/presentation/providers/calculator_notifier.dart';
 import 'package:u_standings/features/standings/presentation/widgets/custom_appbar.dart';
 import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
@@ -15,6 +17,7 @@ class CalculatorPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: _buildAppbar(),
         body: Container(
@@ -56,15 +59,9 @@ class CalculatorPage extends StatelessWidget {
       title: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.h),
         child: Text(
-          'Calculator',
+          'U Standings',
         ),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.refresh_rounded),
-          onPressed: () {},
-        ),
-      ],
     );
   }
 
@@ -73,12 +70,8 @@ class CalculatorPage extends StatelessWidget {
       width: double.maxFinite,
       height: 48.h,
       alignment: Alignment.centerLeft,
-      child: Text(
-        "Your grade calculator awaits!",
-        style: TextStyle(
-          fontSize: 20.sp,
-        ),
-      ),
+      child: Text("Your grade calculator awaits!",
+          style: CustomTextStyles.titleLargeOnSurface),
     );
   }
 
@@ -93,6 +86,7 @@ class CalculatorPage extends StatelessWidget {
             height: 20.h,
             child: Text(
               "Calculator",
+              style: CustomTextStyles.titleMediumOnSurface,
             ),
           ),
           SizedBox(
@@ -104,13 +98,13 @@ class CalculatorPage extends StatelessWidget {
             height: 16.h,
             child: Text(
               "Select a faculty and/or cohort",
+              style: CustomTextStyles.bodySmallOnSecondaryContainer,
             ),
           ),
         ],
       ),
     );
   }
-
 
   _buildSelectButton(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
@@ -226,7 +220,14 @@ class CalculatorPage extends StatelessWidget {
       width: double.maxFinite,
       child: ElevatedButton(
         onPressed: provider.calculateAverage,
-        child: Text("Calculate"),
+        style: AppDecoration().elevatedButtonStyle(true).copyWith(
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadiusStyle.circleBorder24,
+                ),
+              ),
+            ),
+        child: Text("Calculate", style: CustomTextStyles.bodyMediumOnPrimary16),
       ),
     );
   }

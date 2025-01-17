@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:u_standings/core/utils/theme/app_decoration.dart';
+import 'package:u_standings/core/utils/theme/custom_text_styles.dart';
 
 class CohortSemesterSelectorButton extends StatelessWidget {
   final String title;
@@ -48,7 +50,14 @@ class CohortSemesterSelectorButton extends StatelessWidget {
           onOptionSelected(selectedOption);
         }
       },
-      child: Text(title),
+      style: AppDecoration().elevatedButtonStyle(true).copyWith(
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadiusStyle.circleBorder24,
+              ),
+            ),
+          ),
+      child: Text(title, style: CustomTextStyles.bodyMediumOnPrimary16),
     );
   }
 }
