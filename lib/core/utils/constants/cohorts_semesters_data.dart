@@ -3,7 +3,20 @@ import 'package:u_standings/features/standings/domain/entities/exam.dart';
 
 List<CohortSemester> cohortsSemesters = [
   // L0
-  CohortSemester(name: 'L0 S1', exams: []),
+  // TODO: Add L0 exams
+  CohortSemester(name: 'L0 S1', exams: [
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+    Exam(title: "Math Final", credits: 2),
+  ]),
   CohortSemester(name: 'L0 S2', exams: []),
   // L1
   CohortSemester(name: 'L1 CS S1', exams: [

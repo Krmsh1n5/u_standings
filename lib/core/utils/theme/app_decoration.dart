@@ -106,6 +106,7 @@ class AppDecoration {
             ? theme.colorScheme.primary
             : theme.colorScheme.primary.withValues(alpha: 0.5),
       ),
+      shadowColor: WidgetStateProperty.all(theme.colorScheme.onSurface.withValues(alpha: 0.8)),
     );
   }
 }

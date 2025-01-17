@@ -8,7 +8,7 @@ class CustomButtonStyle {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.h),
         ),
-        elevation: 1,
+        elevation: 4,
         padding: EdgeInsets.all(20.h),
         fixedSize: Size(double.maxFinite, 50.h),
       );

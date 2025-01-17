@@ -11,6 +11,13 @@ class CustomTextStyles {
         letterSpacing: .0,
         wordSpacing: .0,
       );
+  static TextStyle get bodySmall12 => TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        letterSpacing: .0,
+        wordSpacing: .0,
+      );
   static TextStyle get bodySmallOnPrimary => TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 12.sp,
@@ -54,6 +61,7 @@ class CustomTextStyles {
         fontFamily: 'Montserrat',
         fontSize: 12.sp,
         color: theme.colorScheme.onSecondaryContainer.withValues(alpha: 1),
+        fontWeight: FontWeight.w400,
         letterSpacing: .0,
         wordSpacing: .0,
       );
@@ -69,7 +77,15 @@ class CustomTextStyles {
         fontFamily: 'Montserrat',
         fontSize: 16.sp,
         color: theme.colorScheme.onPrimary.withValues(alpha: 1),
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
+        letterSpacing: .0,
+        wordSpacing: .0,
+      );
+  static TextStyle get bodyMediumOnPrimary16w400 => TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 16.sp,
+        color: theme.colorScheme.onPrimary.withValues(alpha: 1),
+        fontWeight: FontWeight.w400,
         letterSpacing: .0,
         wordSpacing: .0,
       );
@@ -163,6 +179,14 @@ class CustomTextStyles {
         letterSpacing: .0,
         wordSpacing: .0,
       );
+  static TextStyle get labelMediumOnSurface => TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 16.sp,
+        color: theme.colorScheme.onSurface,
+        fontWeight: FontWeight.w500,
+        letterSpacing: .0,
+        wordSpacing: .0,
+      );
   static TextStyle get labelSmallPrimary => TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 12.sp,
@@ -206,6 +230,7 @@ class CustomTextStyles {
       wordSpacing: .0,
     );
   }
+
   static TextStyle get titleMediumOnSurface => TextStyle(
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w700,

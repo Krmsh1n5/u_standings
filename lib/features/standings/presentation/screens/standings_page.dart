@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:u_standings/core/utils/functions/fetch_semesters_cohorts_func.dart';
-import 'package:u_standings/features/standings/presentation/widgets/custom_appbar.dart';
 import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
 
 class StandingsPage extends StatelessWidget {
@@ -27,7 +26,6 @@ class StandingsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: _buildAppbar(),
         body: Container(
           width: double.infinity,
           padding:
@@ -36,6 +34,7 @@ class StandingsPage extends StatelessWidget {
               EdgeInsets.only(
             // Add custom padding on Android
             left: 16.h,
+            top: 8.h,
             right: 16.h,
           ),
           child: SingleChildScrollView(
@@ -55,23 +54,6 @@ class StandingsPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  _buildAppbar() {
-    return CustomAppBar(
-      title: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.h),
-        child: Text(
-          'U Standings',
-        ),
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.refresh_rounded),
-          onPressed: () {},
-        ),
-      ],
     );
   }
 
@@ -163,7 +145,7 @@ class StandingsPage extends StatelessWidget {
             width: double.maxFinite,
             height: 16.h,
             child: Text(
-              "Select a faculty and/or a cohort",
+              "Select a cohort/faculty and semester ",
             ),
           ),
         ],
@@ -176,7 +158,7 @@ class StandingsPage extends StatelessWidget {
       height: 32.h,
       width: double.maxFinite,
       child: CohortSemesterSelectorButton(
-        title: 'Select Cohort',
+        title: 'Select Faculty',
         fetchOptions: fetchCohortsSemestersFromDatabase,
         onOptionSelected: (selectedOption) {
           print('Selected in Standings: $selectedOption');

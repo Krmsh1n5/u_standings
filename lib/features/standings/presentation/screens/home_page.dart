@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             padding: EdgeInsets.all(2.h),
             decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
+                color: Colors.white,
                 borderRadius: BorderRadiusStyle.roundedBorder8,
                 boxShadow: [
                   BoxShadow(
