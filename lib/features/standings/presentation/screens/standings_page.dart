@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:u_standings/core/utils/functions/fetch_semesters_cohorts_func.dart';
 import 'package:u_standings/features/standings/presentation/widgets/custom_appbar.dart';
+import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
 
 class StandingsPage extends StatelessWidget {
   const StandingsPage({super.key});
@@ -173,9 +175,13 @@ class StandingsPage extends StatelessWidget {
     return SizedBox(
       height: 32.h,
       width: double.maxFinite,
-      child: ElevatedButton(
-        onPressed: () {},
-        child: Text("CS 2023"),
+      child: CohortSemesterSelectorButton(
+        title: 'Select Cohort',
+        fetchOptions: fetchCohortsSemestersFromDatabase,
+        onOptionSelected: (selectedOption) {
+          print('Selected in Standings: $selectedOption');
+          // Handle selection (e.g., update Provider)
+        },
       ),
     );
   }

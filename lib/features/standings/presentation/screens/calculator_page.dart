@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:u_standings/features/standings/presentation/widgets/custom_appbar.dart';
+import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
 
 class CalculatorPage extends StatelessWidget {
   const CalculatorPage({super.key});
@@ -161,9 +162,13 @@ class CalculatorPage extends StatelessWidget {
     return SizedBox(
       height: 32.h,
       width: double.maxFinite,
-      child: ElevatedButton(
-        onPressed: () {},
-        child: Text("CS 2023"),
+      child: CohortSemesterSelectorButton(
+        title: 'Select Cohort',
+        staticOptions: ['L0', 'L1 - CS', 'L1 - CE', 'L2', 'L3'],
+        onOptionSelected: (selectedOption) {
+          print('Selected in Standings: $selectedOption');
+          // Handle selection (e.g., update Provider)
+        },
       ),
     );
   }
