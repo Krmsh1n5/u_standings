@@ -17,7 +17,7 @@ class CalculatorProvider extends ChangeNotifier {
 
   CalculatorProvider() {
     // Fetch initial data
-    exams = getExams(selectedCohortSemester) ?? [];
+    exams = getExams(selectedCohortSemester);
   }
 
   // Update selected cohort and/or semester

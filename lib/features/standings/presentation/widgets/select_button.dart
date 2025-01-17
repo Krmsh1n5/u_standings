@@ -35,6 +35,7 @@ class CohortSemesterSelectorButton extends StatelessWidget {
         // Show modal bottom sheet
         final selectedOption = await showModalBottomSheet<String>(
           backgroundColor: Colors.white,
+          // ignore: use_build_context_synchronously
           context: context,
           showDragHandle: true,
           builder: (context) => Container(

@@ -111,7 +111,7 @@ class CalculatorPage extends StatelessWidget {
       }
     }
 
-    return Container(
+    return SizedBox(
       height: 32.h,
       width: double.maxFinite,
       child: CohortSemesterSelectorButton(

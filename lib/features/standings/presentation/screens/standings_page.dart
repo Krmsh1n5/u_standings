@@ -161,7 +161,6 @@ class StandingsPage extends StatelessWidget {
         title: 'Select Faculty',
         fetchOptions: fetchCohortsSemestersFromDatabase,
         onOptionSelected: (selectedOption) {
-          print('Selected in Standings: $selectedOption');
           // Handle selection (e.g., update Provider)
         },
       ),
