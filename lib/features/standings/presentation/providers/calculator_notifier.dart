@@ -54,6 +54,11 @@ class CalculatorProvider extends ChangeNotifier {
     return _controllers[title]!;
   }
 
+  void clearGrade(String title) {
+    _grades.remove(title);
+    notifyListeners();
+  }
+
   void clearAllGrades() {
     _grades.clear();
     _controllers.clear();

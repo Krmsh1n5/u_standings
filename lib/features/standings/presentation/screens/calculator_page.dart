@@ -20,6 +20,8 @@ class CalculatorPage extends StatefulWidget {
 }
 
 class _CalculatorPageState extends State<CalculatorPage> {
+  bool isError = false;
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
@@ -166,9 +168,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
     credits = checkAndRoundCredits(credits);
 
-    // Border color for validation
-    Color borderColor = theme.colorScheme.onSecondaryContainer.withAlpha(128);
-
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -204,7 +203,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
               margin: EdgeInsets.symmetric(horizontal: 5.w),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: borderColor,
+                  color: isGradeValid(double.tryParse(controller.text) ?? 0)
+                      ? theme.colorScheme.onSecondaryContainer
+                          .withValues(alpha: 0.5)
+                      : theme.colorScheme.error.withValues(alpha: 0.5),
                   width: 1,
                 ),
                 borderRadius: BorderRadiusStyle.roundedBorder8,
@@ -232,18 +234,18 @@ class _CalculatorPageState extends State<CalculatorPage> {
                 onChanged: (value) {
                   final grade = double.tryParse(value);
                   if (grade == null) {
+                    provider.clearGrade(title);
                     return;
                   }
                   if (!isGradeValid(grade)) {
                     // Invalid input
                     setState(() {
-                      borderColor = theme.colorScheme.error.withAlpha(128);
+                      isError = true;
                     });
                   } else {
                     // Valid input
                     setState(() {
-                      borderColor =
-                          theme.colorScheme.onSecondaryContainer.withAlpha(128);
+                      isError = false;
                     });
                     provider.updateGrade(title, grade);
                   }
@@ -266,7 +268,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
+          color: isError
+              ? theme.colorScheme.error.withAlpha(128)
+              : theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
           width: 0.5.h,
         ),
         borderRadius: BorderRadiusStyle.roundedBorder8,
@@ -305,8 +309,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color:
-                theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
+            color: isError
+                ? theme.colorScheme.error.withValues(alpha: 0.5)
+                : theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
             width: 0.5.h,
           ),
           borderRadius: BorderRadiusStyle.roundedBorder8,
@@ -338,7 +343,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     ],
                   ),
                   VerticalDivider(
-                    color: theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
+                    color: theme.colorScheme.onSecondaryContainer
+                        .withValues(alpha: 0.5),
                     thickness: 1.w,
                   ),
                   Column(
