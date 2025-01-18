@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:u_standings/core/utils/constants/cohorts_semesters_data.dart';
 import 'package:u_standings/core/utils/functions/check_and_rounf_credits.dart';
+import 'package:u_standings/core/utils/functions/validation_funcs.dart';
 import 'package:u_standings/core/utils/theme/app_decoration.dart';
 import 'package:u_standings/core/utils/theme/app_theme.dart';
 import 'package:u_standings/core/utils/theme/custom_button_style.dart';
@@ -10,9 +12,14 @@ import 'package:u_standings/core/utils/theme/custom_text_styles.dart';
 import 'package:u_standings/features/standings/presentation/providers/calculator_notifier.dart';
 import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
 
-class CalculatorPage extends StatelessWidget {
+class CalculatorPage extends StatefulWidget {
   const CalculatorPage({super.key});
 
+  @override
+  State<CalculatorPage> createState() => _CalculatorPageState();
+}
+
+class _CalculatorPageState extends State<CalculatorPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
@@ -44,7 +51,9 @@ class CalculatorPage extends StatelessWidget {
                 if (provider.calculatedAverage != null)
                   Column(
                     children: [
-                      buildCalculatedResultBox(context),
+                      _buildCalculatedResultBox(context),
+                      SizedBox(height: 10.h),
+                      _buildMaxMinResultBox(context),
                       SizedBox(height: 10.h),
                     ],
                   ),
@@ -153,8 +162,12 @@ class CalculatorPage extends StatelessWidget {
     required BuildContext context,
   }) {
     final provider = Provider.of<CalculatorProvider>(context);
+    final controller = provider.getController(title);
 
     credits = checkAndRoundCredits(credits);
+
+    // Border color for validation
+    Color borderColor = theme.colorScheme.onSecondaryContainer.withAlpha(128);
 
     return Container(
       width: double.maxFinite,
@@ -184,43 +197,66 @@ class CalculatorPage extends StatelessWidget {
             ),
           ),
           // Input Field
-          Container(
-            height: 40.h,
-            width: 60.w,
-            margin: EdgeInsets.symmetric(horizontal: 5.w),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: theme.colorScheme.onSecondaryContainer
-                    .withValues(alpha: 0.5),
-                width: 1,
+          StatefulBuilder(builder: (context, setState) {
+            return Container(
+              height: 40.h,
+              width: 60.w,
+              margin: EdgeInsets.symmetric(horizontal: 5.w),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: borderColor,
+                  width: 1,
+                ),
+                borderRadius: BorderRadiusStyle.roundedBorder8,
               ),
-              borderRadius: BorderRadiusStyle.roundedBorder8,
-            ),
-            child: TextField(
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              cursorColor: theme.colorScheme.onSecondaryContainer.withValues(
-                alpha: 0.5,
-              ),
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: 16.sp,
+              child: TextField(
+                controller: controller,
+                textAlign: TextAlign.center,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp(r'^\d{0,2}(\.\d{0,4})?$'),
                   ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.zero,
+                ],
+                cursorColor: theme.colorScheme.primary.withValues(
+                  alpha: 0.5,
+                ),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 16.sp,
+                    ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
+                ),
+                onChanged: (value) {
+                  final grade = double.tryParse(value);
+                  if (grade == null) {
+                    return;
+                  }
+                  if (!isGradeValid(grade)) {
+                    // Invalid input
+                    setState(() {
+                      borderColor = theme.colorScheme.error.withAlpha(128);
+                    });
+                  } else {
+                    // Valid input
+                    setState(() {
+                      borderColor =
+                          theme.colorScheme.onSecondaryContainer.withAlpha(128);
+                    });
+                    provider.updateGrade(title, grade);
+                  }
+                },
               ),
-              onChanged: (value) {
-                final grade = double.tryParse(value) ?? 0.0;
-                provider.updateGrade(title, grade);
-              },
-            ),
-          ),
+            );
+          })
         ],
       ),
     );
   }
 
-  buildCalculatedResultBox(BuildContext context) {
+  _buildCalculatedResultBox(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
 
     String averageGrade = provider.calculatedAverage.toString();
@@ -252,12 +288,78 @@ class CalculatorPage extends StatelessWidget {
                   )),
             ],
           ),
-          Text(averageGrade,
-              style: CustomTextStyles.titleLargeOnSurface
-                  .copyWith(fontSize: 24.sp)),
+          Text(
+            averageGrade,
+            style:
+                CustomTextStyles.titleLargeOnSurface.copyWith(fontSize: 24.sp),
+          ),
         ],
       ),
     );
+  }
+
+  _buildMaxMinResultBox(BuildContext context) {
+    final provider = Provider.of<CalculatorProvider>(context);
+    return Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color:
+                theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
+            width: 0.5.h,
+          ),
+          borderRadius: BorderRadiusStyle.roundedBorder8,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Your Maximum and Minimum Grades:",
+              style: CustomTextStyles.bodySmallOnSecondaryContainer,
+            ),
+            SizedBox(height: 8.h),
+            IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        provider.minimumAverage.toString(),
+                        style: CustomTextStyles.titleLargeOnSurface
+                            .copyWith(fontSize: 24.sp),
+                      ),
+                      Text(
+                        'Minimum',
+                        style: CustomTextStyles.bodySmallOnSecondaryContainer
+                            .copyWith(fontSize: 10.sp),
+                      ),
+                    ],
+                  ),
+                  VerticalDivider(
+                    color: theme.colorScheme.onSecondaryContainer.withValues(alpha: 0.5),
+                    thickness: 1.w,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        provider.maximumAverage.toString(),
+                        style: CustomTextStyles.titleLargeOnSurface
+                            .copyWith(fontSize: 24.sp),
+                      ),
+                      Text(
+                        'Maximum',
+                        style: CustomTextStyles.bodySmallOnSecondaryContainer
+                            .copyWith(fontSize: 10.sp),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 
   _buildCalculateButton(BuildContext context) {

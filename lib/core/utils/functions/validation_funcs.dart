@@ -1,11 +1,9 @@
-bool isNumeric(String? inputString, {bool isRequired = false}) {
-  bool isInputStringValid = false;
-  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
-    isInputStringValid = true;
+bool isGradeValid(double grade) {
+  if (grade < 0 || grade > 20) {
+    // Invalid input
+    return false;
+  } else {
+    // Valid input
+    return true;
   }
-  if (inputString != null && inputString.isNotEmpty) {
-    final numericRegExp = RegExp(r'^[0-9]+$');
-    isInputStringValid = numericRegExp.hasMatch(inputString);
-  }
-  return isInputStringValid;
 }
