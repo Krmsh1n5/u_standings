@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:u_standings/core/utils/theme/app_decoration.dart';
+import 'package:u_standings/core/utils/theme/app_theme.dart';
+import 'package:u_standings/core/utils/theme/custom_text_styles.dart';
 import 'package:u_standings/features/standings/domain/entities/standings.dart';
 import 'package:u_standings/features/standings/presentation/providers/standings_notifier.dart';
 import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
@@ -38,7 +41,10 @@ class _StandingsPageState extends State<StandingsPage> {
 
     // Check if data is ready
     if (!isDataReady) {
-      return CircularProgressIndicator(); 
+      return Align(
+        alignment: Alignment.center,
+        child: CircularProgressIndicator(),
+      );
     }
 
     return SafeArea(
@@ -80,12 +86,8 @@ class _StandingsPageState extends State<StandingsPage> {
       width: double.maxFinite,
       height: 48.h,
       alignment: Alignment.centerLeft,
-      child: Text(
-        "Explore the leaderboard rankings!",
-        style: TextStyle(
-          fontSize: 20.sp,
-        ),
-      ),
+      child: Text("Explore the leaderboard!",
+          style: CustomTextStyles.titleLargeOnSurface),
     );
   }
 
@@ -107,32 +109,42 @@ class _StandingsPageState extends State<StandingsPage> {
             height: 20.h,
             child: Text(
               "Completed Exam Credits",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: CustomTextStyles.titleMediumOnSurface
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           SizedBox(
-            height: 8.h,
+            height: 4.h,
           ),
-          Row(
+          Stack(
             children: [
-              Expanded(
-                flex: (percentageCompleted * 100).toInt(),
-                child: Container(
-                  height: 25.h,
-                  color: Colors.blue[400],
-                  alignment: Alignment.center,
-                  child: Text(
-                    "$completedCredits / $totalCredits",
-                    style: TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
+              // Background bar
+              Container(
+                height: 25.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadiusStyle.circleBorder24,
+                  color: theme.colorScheme.onSecondaryContainer
+                      .withValues(alpha: 0.5),
                 ),
               ),
-              Expanded(
-                flex: ((1 - percentageCompleted) * 100).toInt(),
+              // Foreground bar representing progress
+              FractionallySizedBox(
+                widthFactor: percentageCompleted,
                 child: Container(
                   height: 25.h,
-                  color: Colors.grey[700],
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusStyle.circleBorder24,
+                    color: theme.colorScheme.primary,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 16.w),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "$completedCredits / $totalCredits",
+                      style: CustomTextStyles.bodySmallOnPrimary,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -153,6 +165,8 @@ class _StandingsPageState extends State<StandingsPage> {
             height: 20.h,
             child: Text(
               "Leaderboard",
+              style: CustomTextStyles.titleMediumOnSurface
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           SizedBox(
@@ -164,6 +178,10 @@ class _StandingsPageState extends State<StandingsPage> {
             height: 16.h,
             child: Text(
               "Select a cohort/faculty and semester ",
+              style: CustomTextStyles.bodySmallOnSecondaryContainer.copyWith(
+                color: theme.colorScheme.onSecondaryContainer
+                    .withValues(alpha: 0.5),
+              ),
             ),
           ),
         ],
@@ -226,7 +244,7 @@ class _StandingsPageState extends State<StandingsPage> {
                 ),
                 // Score Column
                 SizedBox(
-                  width: 50.w,
+                  width: 55.w,
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(

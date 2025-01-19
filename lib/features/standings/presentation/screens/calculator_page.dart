@@ -92,7 +92,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
             height: 20.h,
             child: Text(
               "Calculator",
-              style: CustomTextStyles.titleMediumOnSurface,
+              style: CustomTextStyles.titleMediumOnSurface.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           SizedBox(
@@ -104,7 +104,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
             height: 16.h,
             child: Text(
               "Select a cohort/faculty and semester",
-              style: CustomTextStyles.bodySmallOnSecondaryContainer,
+              style: CustomTextStyles.bodySmallOnSecondaryContainer.copyWith(
+                color: theme.colorScheme.onSecondaryContainer
+                    .withValues(alpha: 0.5),
+              ),
             ),
           ),
         ],
