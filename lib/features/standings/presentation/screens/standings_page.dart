@@ -217,13 +217,14 @@ class StandingsPage extends StatelessWidget {
                   ),
                 ),
                 // Change Indicator Column
-                SizedBox(
+                Container(
                   width: 70.w,
+                  padding: EdgeInsets.only(left: 40.w),
                   child: Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     child: item['change'] != 0
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 item['change'] > 0
