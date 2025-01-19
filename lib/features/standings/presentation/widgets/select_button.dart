@@ -5,29 +5,25 @@ import 'package:u_standings/core/utils/theme/custom_text_styles.dart';
 
 class CohortSemesterSelectorButton extends StatelessWidget {
   final String title;
-  final Future<List<String>> Function()? fetchOptions; // Fetch from API/DB
-  final List<String>? staticOptions; // Predefined list
+  final List<String> fetchOptions;
+  final List<String>? staticOptions;
   final ValueChanged<String> onOptionSelected;
 
   const CohortSemesterSelectorButton({
     super.key,
     required this.title,
-    this.fetchOptions,
+    this.fetchOptions = const [],
     this.staticOptions,
     required this.onOptionSelected,
-  }) : assert(
-            (fetchOptions != null && staticOptions == null) ||
-                (fetchOptions == null && staticOptions != null),
-            'Provide either fetchOptions or staticOptions, not both.');
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        // Fetch options (from API/DB or static)
         List<String> options;
-        if (fetchOptions != null) {
-          options = await fetchOptions!();
+        if (fetchOptions.isNotEmpty) {
+          options = fetchOptions;
         } else {
           options = staticOptions!;
         }

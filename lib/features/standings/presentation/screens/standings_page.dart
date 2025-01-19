@@ -1,27 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:u_standings/core/utils/functions/fetch_semesters_cohorts_func.dart';
+import 'package:provider/provider.dart';
+import 'package:u_standings/features/standings/domain/entities/standings.dart';
+import 'package:u_standings/features/standings/presentation/providers/standings_notifier.dart';
 import 'package:u_standings/features/standings/presentation/widgets/select_button.dart';
 
-class StandingsPage extends StatelessWidget {
+class StandingsPage extends StatefulWidget {
   const StandingsPage({super.key});
 
   @override
+  State<StandingsPage> createState() => _StandingsPageState();
+}
+
+class _StandingsPageState extends State<StandingsPage> {
+  bool isDataReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      await Provider.of<StandingsNotifier>(context, listen: false)
+          .loadAvailableCohortsSemesters();
+      await Provider.of<StandingsNotifier>(context, listen: false)
+          .loadCredits();
+      await Provider.of<StandingsNotifier>(context, listen: false)
+          .loadStandings();
+
+      setState(() {
+        isDataReady = true;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> leaderboardData = [
-      {'rank': 1, 'name': 'John Doe', 'score': 17.9, 'change': 2},
-      {'rank': 2, 'name': 'Jane Doe', 'score': 17.8, 'change': -1},
-      {'rank': 3, 'name': '22322555', 'score': 17.6, 'change': 1},
-      {'rank': 4, 'name': 'James Brown', 'score': 17.58, 'change': 0},
-      {'rank': 5, 'name': 'Lebron James', 'score': 17.5, 'change': 0},
-      {'rank': 6, 'name': 'James Harden', 'score': 17.4, 'change': 0},
-      {'rank': 7, 'name': '22322574', 'score': 17.3, 'change': 0},
-      {'rank': 8, 'name': 'Toghrul Mardiyev', 'score': 17.2, 'change': 0},
-      {'rank': 9, 'name': 'Veli Tahmazov', 'score': 17.15, 'change': 0},
-      {'rank': 10, 'name': 'Kamal Yalchin', 'score': 17.1, 'change': 0},
-      {'rank': 11, 'name': '22322579', 'score': 17.0, 'change': 0},
-      {'rank': 12, 'name': 'Farid Valiev', 'score': 16.9, 'change': 0},
-    ];
+    final provider = Provider.of<StandingsNotifier>(context);
+
+    // Check if data is ready
+    if (!isDataReady) {
+      return CircularProgressIndicator(); 
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -41,13 +59,13 @@ class StandingsPage extends StatelessWidget {
             child: Column(
               children: [
                 _buildTitleWidget(),
-                _buildCompletedExamCreditsWidget(),
+                _buildCompletedExamCreditsWidget(context),
                 SizedBox(height: 4.h),
                 _buildHeadingAndSubheadingText(),
                 SizedBox(height: 4.h),
-                _buildSelectButton(),
+                _buildSelectButton(context),
                 SizedBox(height: 8.h),
-                _buildStandingsTable(leaderboardData),
+                _buildStandingsTable(provider.standings),
                 SizedBox(height: 2.h),
               ],
             ),
@@ -71,13 +89,13 @@ class StandingsPage extends StatelessWidget {
     );
   }
 
-  _buildCompletedExamCreditsWidget() {
-    // Example data for completed and total credits
-    double completedCredits = 18;
-    double totalCredits = 30;
+  _buildCompletedExamCreditsWidget(BuildContext context) {
+    final provider = Provider.of<StandingsNotifier>(context);
+    final completedCredits = provider.knownCredits;
+    final totalCredits = provider.totalCohortSemesterCredits;
 
     // Calculate the percentage of completed credits
-    double percentageCompleted = completedCredits / totalCredits;
+    double percentageCompleted = completedCredits! / totalCredits!;
 
     return SizedBox(
       width: double.infinity,
@@ -153,21 +171,22 @@ class StandingsPage extends StatelessWidget {
     );
   }
 
-  _buildSelectButton() {
+  _buildSelectButton(BuildContext context) {
+    final provider = Provider.of<StandingsNotifier>(context);
     return SizedBox(
       height: 32.h,
       width: double.maxFinite,
       child: CohortSemesterSelectorButton(
-        title: 'Select Faculty',
-        fetchOptions: fetchCohortsSemestersFromDatabase,
+        title: provider.selectedCohortSemester ?? 'Select Faculty',
+        fetchOptions: provider.cohortSemesters,
         onOptionSelected: (selectedOption) {
-          // Handle selection (e.g., update Provider)
+          provider.updateCohort(selectedOption);
         },
       ),
     );
   }
 
-  Widget _buildStandingsTable(List<Map<String, dynamic>> data) {
+  Widget _buildStandingsTable(List<Standings> data) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Column(
@@ -183,7 +202,7 @@ class StandingsPage extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      item['rank'].toString(),
+                      item.rank.toString(),
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -198,7 +217,7 @@ class StandingsPage extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        item['name'],
+                        item.studentId,
                         style: TextStyle(fontSize: 16.sp),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -211,7 +230,7 @@ class StandingsPage extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      item['score'].toStringAsFixed(2),
+                      item.average.toStringAsFixed(3),
                       style: TextStyle(fontSize: 16.sp),
                     ),
                   ),
@@ -222,24 +241,23 @@ class StandingsPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 40.w),
                   child: Align(
                     alignment: Alignment.center,
-                    child: item['change'] != 0
+                    child: item.change != 0
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
-                                item['change'] > 0
+                                item.change > 0
                                     ? Icons.arrow_upward
                                     : Icons.arrow_downward,
-                                color: item['change'] > 0
-                                    ? Colors.green
-                                    : Colors.red,
+                                color:
+                                    item.change > 0 ? Colors.green : Colors.red,
                                 size: 16.sp,
                               ),
                               SizedBox(width: 4.w),
                               Text(
-                                item['change'].abs().toString(),
+                                item.change.abs().toString(),
                                 style: TextStyle(
-                                  color: item['change'] > 0
+                                  color: item.change > 0
                                       ? Colors.green
                                       : Colors.red,
                                   fontSize: 14.sp,

@@ -5,7 +5,7 @@ class GetCreditsRepositoryImpl implements GetCreditsRepository {
   Future<double> getKnownCredits(String selectedCohortSemester) async {
     // Simulate a network delay
     await Future.delayed(Duration(seconds: 1));
-    return 19.5;
+    return Future.value(23.7);
   }
 
   @override
@@ -13,6 +13,6 @@ class GetCreditsRepositoryImpl implements GetCreditsRepository {
       String selectedCohortSemester) async {
     // Simulate a network delay
     await Future.delayed(Duration(seconds: 1));
-    return 30;
+    return Future.value(30.0);
   }
 }
