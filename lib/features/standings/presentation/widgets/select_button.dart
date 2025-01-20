@@ -63,7 +63,8 @@ class CohortSemesterSelectorButton extends StatelessWidget {
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           options[index],
-                          style: CustomTextStyles.titleMediumOnSurface,
+                          style: CustomTextStyles.titleMediumOnSurface
+                              .copyWith(fontWeight: FontWeight.w600),
                         ),
                         onTap: () => Navigator.pop(context, options[index]),
                       );
@@ -87,9 +88,12 @@ class CohortSemesterSelectorButton extends StatelessWidget {
               ),
             ),
           ),
-      child: Text(title,
-          style: CustomTextStyles.bodyMediumOnPrimary16
-              .copyWith(letterSpacing: 0.5)),
+      child: Text(
+        title,
+        style: CustomTextStyles.bodyMediumOnPrimary16
+            .copyWith(fontWeight: FontWeight.w600,
+            letterSpacing: 0.5),
+      ),
     );
   }
 }

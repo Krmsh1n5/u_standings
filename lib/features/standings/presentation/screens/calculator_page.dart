@@ -383,7 +383,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
         child: Center(
           child: Text("Calculate",
               style: CustomTextStyles.bodyMediumOnPrimary16
-                  .copyWith(letterSpacing: 0.5)),
+                  .copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5)),
         ),
       ),
     );

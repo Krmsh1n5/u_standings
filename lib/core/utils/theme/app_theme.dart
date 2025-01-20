@@ -94,9 +94,9 @@ class ColorSchemes {
     onSurface: Color.fromARGB(255, 0, 0, 0),
     onSurfaceVariant: Color(0XFF9098B1),
     onSecondary: Color(0X7F223263),
-    error: Color.fromARGB(255, 239, 68, 68),
+    error: Colors.red,
     onError: Color(0XFFFFC732),
-    tertiary: Color(0XFF48C78E),
+    tertiary: Colors.green,
   );
 
   static const darkCodeColorScheme = ColorScheme.dark(

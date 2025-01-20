@@ -86,8 +86,10 @@ class _StandingsPageState extends State<StandingsPage> {
       width: double.maxFinite,
       height: 48.h,
       alignment: Alignment.centerLeft,
-      child: Text("Explore the leaderboard!",
-          style: CustomTextStyles.titleLargeOnSurface),
+      child: Text(
+        "Explore the leaderboard!",
+        style: CustomTextStyles.titleLargeOnSurface,
+      ),
     );
   }
 
@@ -114,7 +116,7 @@ class _StandingsPageState extends State<StandingsPage> {
             ),
           ),
           SizedBox(
-            height: 4.h,
+            height: 8.h,
           ),
           Stack(
             children: [
@@ -142,7 +144,8 @@ class _StandingsPageState extends State<StandingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "$completedCredits / $totalCredits",
-                      style: CustomTextStyles.bodySmallOnPrimary,
+                      style: CustomTextStyles.bodySmallOnPrimary
+                          .copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -206,94 +209,129 @@ class _StandingsPageState extends State<StandingsPage> {
 
   Widget _buildStandingsTable(List<Standings> data) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 4.h),
       child: Column(
-        children: data.map((item) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Rank Column
-                SizedBox(
-                  width: 50.w,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      item.rank.toString(),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
+        children: data.asMap().entries.map((entry) {
+          final int index = entry.key;
+          final Standings item = entry.value;
+          final bool isLastItem = index == data.length - 1;
+
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Rank Column
+                    SizedBox(
+                      width: 50.w,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          item.rank.toString(),
+                          style: CustomTextStyles.bodyMediumOnSurface16,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                // Name Column
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        item.studentId,
-                        style: TextStyle(fontSize: 16.sp),
-                        overflow: TextOverflow.ellipsis,
+                    // Name Column
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            item.studentId,
+                            style: CustomTextStyles.bodyMediumOnSurface16,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                // Score Column
-                SizedBox(
-                  width: 55.w,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      item.average.toStringAsFixed(3),
-                      style: TextStyle(fontSize: 16.sp),
+                    // Score Column
+                    SizedBox(
+                      width: 55.w,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          item.average.toStringAsFixed(3),
+                          style: CustomTextStyles.bodyMediumOnSurface16,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                // Change Indicator Column
-                Container(
-                  width: 70.w,
-                  padding: EdgeInsets.only(left: 40.w),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: item.change != 0
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                item.change > 0
-                                    ? Icons.arrow_upward
-                                    : Icons.arrow_downward,
-                                color:
-                                    item.change > 0 ? Colors.green : Colors.red,
-                                size: 16.sp,
-                              ),
-                              SizedBox(width: 4.w),
-                              Text(
-                                item.change.abs().toString(),
-                                style: TextStyle(
-                                  color: item.change > 0
-                                      ? Colors.green
-                                      : Colors.red,
-                                  fontSize: 14.sp,
+                    // Change Indicator Column
+                    Container(
+                      width: 70.w,
+                      padding: EdgeInsets.only(left: 40.w),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: item.change != 0
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  item.change > 0
+                                      ? Text(
+                                          String.fromCharCode(
+                                              Icons.arrow_upward.codePoint),
+                                          style: TextStyle(
+                                            inherit: false,
+                                            color: theme.colorScheme.tertiary,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily:
+                                                Icons.arrow_upward.fontFamily,
+                                            package:
+                                                Icons.arrow_upward.fontPackage,
+                                          ),
+                                        )
+                                      : Text(
+                                          String.fromCharCode(
+                                              Icons.arrow_downward.codePoint),
+                                          style: TextStyle(
+                                            inherit: false,
+                                            color: theme.colorScheme.error,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily:
+                                                Icons.arrow_downward.fontFamily,
+                                            package: Icons
+                                                .arrow_downward.fontPackage,
+                                          ),
+                                        ),
+                                  SizedBox(width: 4.w),
+                                  Text(
+                                    item.change.abs().toString(),
+                                    style: CustomTextStyles
+                                        .bodyMediumOnSurface16
+                                        .copyWith(
+                                      color: item.change > 0
+                                          ? theme.colorScheme.tertiary
+                                          : theme.colorScheme.error,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                '-',
+                                style: CustomTextStyles.bodyMediumOnSurface16
+                                    .copyWith(
+                                  color: theme.colorScheme.onSurface
+                                      .withValues(alpha: 0.5),
                                 ),
                               ),
-                            ],
-                          )
-                        : Text(
-                            '-',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.grey,
-                            ),
-                          ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!isLastItem)
+                Divider(
+                  thickness: 1,
+                  color: theme.colorScheme.onSecondaryContainer.withValues(
+                    alpha: 0.5,
                   ),
                 ),
-              ],
-            ),
+            ],
           );
         }).toList(),
       ),
