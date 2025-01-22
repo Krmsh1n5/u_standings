@@ -15,10 +15,49 @@ final List<StandingsModel> leaderboardData = [
   StandingsModel(id: 12, cohortSemester: 'L1 CS S1', rank: 12, studentId: '22322888', average: 16.9, change: 0),
 ];
 
+final List<String> cohortSemesterData = [
+  'L0 S1',
+  'L0 S2',
+  'L1 CS S1',
+  'L1 CS S2',
+  'L1 CE S1',
+  'L1 CE S2',
+  'L1 PE S1',
+  'L1 PE S2',
+  'L1 GE S1',
+  'L1 GE S2',
+  'L2 CS S1',
+  'L2 CS S2',
+  'L2 CE S1',
+  'L2 CE S2',
+  'L2 PE S1',
+  'L2 PE S2',
+  'L2 GE S1',
+  'L2 GE S2',
+];
+
 class UStandingsApi {
   Future<List<StandingsModel>> getStandings(String selectedCohortSemester) async {
     // Simulate a network delay
     await Future.delayed(Duration(seconds: 1));
     return leaderboardData;
+  }
+
+  Future<List<String>> getAvailableCohortSemesters() async {
+    // Simulate a network delay
+    await Future.delayed(Duration(seconds: 1));
+    return cohortSemesterData;
+  }
+
+  Future<double> getKnownCredits(String selectedCohortSemester) async {
+    // Simulate a network delay
+    await Future.delayed(Duration(seconds: 1));
+    return Future.value(23.7);
+  }
+
+  Future<double> getTotalCohortSemesterCredits(String selectedCohortSemester) async {
+    // Simulate a network delay
+    await Future.delayed(Duration(seconds: 1));
+    return Future.value(30.0);
   }
 }

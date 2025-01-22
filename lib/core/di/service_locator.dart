@@ -21,8 +21,8 @@ setupServiceLocator() {
 
   // Repositories
   serviceLocator.registerLazySingleton<StandingsRepository>(() => StandingsRepositoryImpl(serviceLocator()));
-  serviceLocator.registerLazySingleton<CohortSemesterRepository>(() => CohortSemesterRepositoryImpl());
-  serviceLocator.registerLazySingleton<GetCreditsRepository>(() => GetCreditsRepositoryImpl());
+  serviceLocator.registerLazySingleton<CohortSemesterRepository>(() => CohortSemesterRepositoryImpl(serviceLocator()));
+  serviceLocator.registerLazySingleton<GetCreditsRepository>(() => GetCreditsRepositoryImpl(serviceLocator()));
 
   // Use Cases
   serviceLocator.registerLazySingleton(() => GetStandingsUseCase(serviceLocator()));
