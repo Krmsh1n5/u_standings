@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:u_standings/features/standings/data/datasources/api_service.dart';
 import 'package:u_standings/features/standings/data/repositories/cohort_semester_repository_impl.dart';
 import 'package:u_standings/features/standings/data/repositories/credits_repository_impl.dart';
 import 'package:u_standings/features/standings/data/repositories/standings_repository_impl.dart';
@@ -15,8 +16,11 @@ import 'package:u_standings/features/standings/presentation/providers/standings_
 final serviceLocator = GetIt.instance;
 
 setupServiceLocator() {
+  // API
+   serviceLocator.registerFactory(() => UStandingsApi());
+
   // Repositories
-  serviceLocator.registerLazySingleton<StandingsRepository>(() => StandingsRepositoryImpl());
+  serviceLocator.registerLazySingleton<StandingsRepository>(() => StandingsRepositoryImpl(serviceLocator()));
   serviceLocator.registerLazySingleton<CohortSemesterRepository>(() => CohortSemesterRepositoryImpl());
   serviceLocator.registerLazySingleton<GetCreditsRepository>(() => GetCreditsRepositoryImpl());
 
