@@ -1,10 +1,14 @@
-class Standings {
+class StandingsEntity {
+  final int id;
+  final String cohortSemester;
   final int rank;
   final String studentId;
   final double average;
   final int change;
 
-  Standings({
+  StandingsEntity({
+    required this.id,
+    required this.cohortSemester,
     required this.rank,
     required this.studentId,
     required this.average,

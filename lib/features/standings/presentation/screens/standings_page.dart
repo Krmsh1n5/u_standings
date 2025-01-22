@@ -207,13 +207,13 @@ class _StandingsPageState extends State<StandingsPage> {
     );
   }
 
-  Widget _buildStandingsTable(List<Standings> data) {
+  Widget _buildStandingsTable(List<StandingsEntity> data) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 4.h),
       child: Column(
         children: data.asMap().entries.map((entry) {
           final int index = entry.key;
-          final Standings item = entry.value;
+          final StandingsEntity item = entry.value;
           final bool isLastItem = index == data.length - 1;
 
           return Column(

@@ -6,7 +6,7 @@ class GetStandingsUseCase {
 
   GetStandingsUseCase(this.repository);
 
-  Future<List<Standings>> call(String selectedCohortSemester) async {
+  Future<List<StandingsEntity>> call(String selectedCohortSemester) async {
     return await repository.getStandings(selectedCohortSemester);
   }
 }

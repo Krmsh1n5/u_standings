@@ -10,7 +10,7 @@ class StandingsNotifier extends ChangeNotifier {
   String? selectedCohortSemester;
   double? knownCredits;
   double? totalCohortSemesterCredits;
-  List<Standings> standings = [];
+  List<StandingsEntity> standings = [];
   List<String> cohortSemesters = [];
 
   // Use Cases
