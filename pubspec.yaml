@@ -39,6 +39,8 @@ dependencies:
   freezed: ^2.5.8
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
+  flutter_dotenv: ^5.2.1
+  http: ^1.3.0
   
 dev_dependencies:
   flutter_test:
@@ -92,5 +94,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+  assets:
+    - assets/.env.dev
+    - assets/.env.prod
 
   

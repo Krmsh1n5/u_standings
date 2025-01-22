@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:u_standings/core/shared/config.dart';
 import 'package:u_standings/features/standings/data/models/standings/standings_model.dart';
 
 final List<StandingsModel> leaderboardData = [
@@ -38,26 +41,97 @@ final List<String> cohortSemesterData = [
 
 class UStandingsApi {
   Future<List<StandingsModel>> getStandings(String selectedCohortSemester) async {
+    final endpoint = '${Config().apiBaseUrl}/standings/get';
+    try {
+      if (selectedCohortSemester.isEmpty) {
+        throw Exception('Invalid cohort semester');
+      }
+
+      var queryParameters = {
+        'cohortSemester': selectedCohortSemester,
+      };
+      var uri = Uri.parse(endpoint).replace(queryParameters: queryParameters);
+      var response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body) as List;
+        List<StandingsModel> standingsList = jsonData.map((jsonItem) => StandingsModel.fromJson(jsonItem)).toList();
+        return standingsList;
+      } else {
+        throw Exception('Failed to load leaderboard data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load leaderboard data');
+    }
     // Simulate a network delay
-    await Future.delayed(Duration(seconds: 1));
-    return leaderboardData;
+    // await Future.delayed(Duration(seconds: 1));
+    // return leaderboardData;
   }
 
   Future<List<String>> getAvailableCohortSemesters() async {
+    final endpoint = '${Config().apiBaseUrl}/cohortSemesters/get';
+    try {
+      var uri = Uri.parse(endpoint);
+      var response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body) as List;
+        List<String> cohortSemesters = List<String>.from(jsonData);
+        return cohortSemesters;
+      } else {
+        throw Exception('Failed to load cohortSemesters data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load cohortSemesters data');
+    }
     // Simulate a network delay
-    await Future.delayed(Duration(seconds: 1));
-    return cohortSemesterData;
+    // await Future.delayed(Duration(seconds: 1));
+    // return cohortSemesterData;
   }
 
   Future<double> getKnownCredits(String selectedCohortSemester) async {
-    // Simulate a network delay
-    await Future.delayed(Duration(seconds: 1));
-    return Future.value(23.7);
-  }
+    final endpoint = '${Config().apiBaseUrl}/credits/get';
+    try {
+      if (selectedCohortSemester.isEmpty) {
+        throw Exception('Invalid cohort semester');
+      }
 
-  Future<double> getTotalCohortSemesterCredits(String selectedCohortSemester) async {
-    // Simulate a network delay
-    await Future.delayed(Duration(seconds: 1));
-    return Future.value(30.0);
+      var queryParameters = {
+        'cohortSemester': selectedCohortSemester,
+      };
+      var uri = Uri.parse(endpoint).replace(queryParameters: queryParameters);
+      var response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      double knownCredits = jsonData is double ? jsonData : double.tryParse(jsonData.toString()) ?? 0.0;
+      return knownCredits;
+      } else {
+        throw Exception('Failed to load cohortSemesters data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load cohortSemesters data');
+    }
+    // // Simulate a network delay
+    // await Future.delayed(Duration(seconds: 1));
+    // return Future.value(23.7);
   }
 }

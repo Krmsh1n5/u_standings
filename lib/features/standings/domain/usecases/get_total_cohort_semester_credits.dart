@@ -1,12 +1,16 @@
-import 'package:u_standings/features/standings/domain/repositories/credits_repository.dart';
+import 'package:u_standings/core/utils/constants/cohorts_semesters_data.dart';
 
 class GetTotalCohortSemesterCreditsUseCase {
-  final GetCreditsRepository repository;
+  double call(String selectedCohortSemester) {
+    var totalCredits = 0.0;
+    final exams = cohortsSemesters
+        .firstWhere((element) => element.name == selectedCohortSemester)
+        .exams;
 
-  GetTotalCohortSemesterCreditsUseCase(this.repository);
+    for (var exam in exams) {
+      totalCredits += exam.credits;
+    }
 
-  Future<double> call(String selectedCohortSemester) async {
-    return await repository
-        .getTotalCohortSemesterCredits(selectedCohortSemester);
+    return totalCredits;
   }
 }

@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:u_standings/core/di/service_locator.dart';
@@ -8,7 +10,13 @@ import 'package:u_standings/features/standings/presentation/providers/calculator
 import 'package:u_standings/features/standings/presentation/providers/standings_notifier.dart';
 import 'package:u_standings/features/standings/presentation/screens/home_page.dart';
 
-void main() {
+void main() async {
+    if (kReleaseMode) {
+    await dotenv.load(fileName: 'assets/.env.prod');
+  } else {
+    await dotenv.load(fileName: 'assets/.env.dev');
+  }
+  
   setupServiceLocator();
 
   runApp(

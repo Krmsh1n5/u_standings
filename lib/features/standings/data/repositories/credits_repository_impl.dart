@@ -10,10 +10,4 @@ class GetCreditsRepositoryImpl implements GetCreditsRepository {
   Future<double> getKnownCredits(String selectedCohortSemester) async {
     return api.getKnownCredits(selectedCohortSemester);
   }
-
-  @override
-  Future<double> getTotalCohortSemesterCredits(
-      String selectedCohortSemester) async {
-    return api.getTotalCohortSemesterCredits(selectedCohortSemester);
-  }
 }

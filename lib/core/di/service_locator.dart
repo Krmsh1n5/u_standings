@@ -28,7 +28,7 @@ setupServiceLocator() {
   serviceLocator.registerLazySingleton(() => GetStandingsUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => GetKnownCohortSemesterUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => GetKnownCreditsUseCase(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => GetTotalCohortSemesterCreditsUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => GetTotalCohortSemesterCreditsUseCase());
 
   // Providers
   serviceLocator.registerFactory(() => CalculatorProvider());
