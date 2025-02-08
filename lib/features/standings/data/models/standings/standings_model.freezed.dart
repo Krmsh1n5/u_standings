@@ -14,61 +14,59 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-StandingsModel _$StandingsFromJson(Map<String, dynamic> json) {
-  return _Standings.fromJson(json);
+StandingsModel _$StandingsModelFromJson(Map<String, dynamic> json) {
+  return _StandingsModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Standings {
+mixin _$StandingsModel {
   int get id => throw _privateConstructorUsedError;
   String get cohortSemester => throw _privateConstructorUsedError;
-  int get rank => throw _privateConstructorUsedError;
   String get studentId => throw _privateConstructorUsedError;
   double get average => throw _privateConstructorUsedError;
   int get change => throw _privateConstructorUsedError;
 
-  /// Serializes this Standings to a JSON map.
+  /// Serializes this StandingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Standings
+  /// Create a copy of StandingsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $StandingsCopyWith<StandingsModel> get copyWith =>
+  $StandingsModelCopyWith<StandingsModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StandingsCopyWith<$Res> {
-  factory $StandingsCopyWith(StandingsModel value, $Res Function(StandingsModel) then) =
-      _$StandingsCopyWithImpl<$Res, StandingsModel>;
+abstract class $StandingsModelCopyWith<$Res> {
+  factory $StandingsModelCopyWith(
+          StandingsModel value, $Res Function(StandingsModel) then) =
+      _$StandingsModelCopyWithImpl<$Res, StandingsModel>;
   @useResult
   $Res call(
       {int id,
       String cohortSemester,
-      int rank,
       String studentId,
       double average,
       int change});
 }
 
 /// @nodoc
-class _$StandingsCopyWithImpl<$Res, $Val extends StandingsModel>
-    implements $StandingsCopyWith<$Res> {
-  _$StandingsCopyWithImpl(this._value, this._then);
+class _$StandingsModelCopyWithImpl<$Res, $Val extends StandingsModel>
+    implements $StandingsModelCopyWith<$Res> {
+  _$StandingsModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Standings
+  /// Create a copy of StandingsModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? cohortSemester = null,
-    Object? rank = null,
     Object? studentId = null,
     Object? average = null,
     Object? change = null,
@@ -82,10 +80,6 @@ class _$StandingsCopyWithImpl<$Res, $Val extends StandingsModel>
           ? _value.cohortSemester
           : cohortSemester // ignore: cast_nullable_to_non_nullable
               as String,
-      rank: null == rank
-          ? _value.rank
-          : rank // ignore: cast_nullable_to_non_nullable
-              as int,
       studentId: null == studentId
           ? _value.studentId
           : studentId // ignore: cast_nullable_to_non_nullable
@@ -103,43 +97,41 @@ class _$StandingsCopyWithImpl<$Res, $Val extends StandingsModel>
 }
 
 /// @nodoc
-abstract class _$$StandingsImplCopyWith<$Res>
-    implements $StandingsCopyWith<$Res> {
-  factory _$$StandingsImplCopyWith(
-          _$StandingsImpl value, $Res Function(_$StandingsImpl) then) =
-      __$$StandingsImplCopyWithImpl<$Res>;
+abstract class _$$StandingsModelImplCopyWith<$Res>
+    implements $StandingsModelCopyWith<$Res> {
+  factory _$$StandingsModelImplCopyWith(_$StandingsModelImpl value,
+          $Res Function(_$StandingsModelImpl) then) =
+      __$$StandingsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {int id,
       String cohortSemester,
-      int rank,
       String studentId,
       double average,
       int change});
 }
 
 /// @nodoc
-class __$$StandingsImplCopyWithImpl<$Res>
-    extends _$StandingsCopyWithImpl<$Res, _$StandingsImpl>
-    implements _$$StandingsImplCopyWith<$Res> {
-  __$$StandingsImplCopyWithImpl(
-      _$StandingsImpl _value, $Res Function(_$StandingsImpl) _then)
+class __$$StandingsModelImplCopyWithImpl<$Res>
+    extends _$StandingsModelCopyWithImpl<$Res, _$StandingsModelImpl>
+    implements _$$StandingsModelImplCopyWith<$Res> {
+  __$$StandingsModelImplCopyWithImpl(
+      _$StandingsModelImpl _value, $Res Function(_$StandingsModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Standings
+  /// Create a copy of StandingsModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
     Object? cohortSemester = null,
-    Object? rank = null,
     Object? studentId = null,
     Object? average = null,
     Object? change = null,
   }) {
-    return _then(_$StandingsImpl(
+    return _then(_$StandingsModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -148,10 +140,6 @@ class __$$StandingsImplCopyWithImpl<$Res>
           ? _value.cohortSemester
           : cohortSemester // ignore: cast_nullable_to_non_nullable
               as String,
-      rank: null == rank
-          ? _value.rank
-          : rank // ignore: cast_nullable_to_non_nullable
-              as int,
       studentId: null == studentId
           ? _value.studentId
           : studentId // ignore: cast_nullable_to_non_nullable
@@ -170,24 +158,21 @@ class __$$StandingsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$StandingsImpl implements _Standings {
-  const _$StandingsImpl(
+class _$StandingsModelImpl implements _StandingsModel {
+  const _$StandingsModelImpl(
       {required this.id,
       required this.cohortSemester,
-      required this.rank,
       required this.studentId,
       required this.average,
       required this.change});
 
-  factory _$StandingsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$StandingsImplFromJson(json);
+  factory _$StandingsModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StandingsModelImplFromJson(json);
 
   @override
   final int id;
   @override
   final String cohortSemester;
-  @override
-  final int rank;
   @override
   final String studentId;
   @override
@@ -197,18 +182,17 @@ class _$StandingsImpl implements _Standings {
 
   @override
   String toString() {
-    return 'Standings(id: $id, cohortSemester: $cohortSemester, rank: $rank, studentId: $studentId, average: $average, change: $change)';
+    return 'StandingsModel(id: $id, cohortSemester: $cohortSemester, studentId: $studentId, average: $average, change: $change)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StandingsImpl &&
+            other is _$StandingsModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.cohortSemester, cohortSemester) ||
                 other.cohortSemester == cohortSemester) &&
-            (identical(other.rank, rank) || other.rank == rank) &&
             (identical(other.studentId, studentId) ||
                 other.studentId == studentId) &&
             (identical(other.average, average) || other.average == average) &&
@@ -217,20 +201,21 @@ class _$StandingsImpl implements _Standings {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, cohortSemester, rank, studentId, average, change);
+  int get hashCode =>
+      Object.hash(runtimeType, id, cohortSemester, studentId, average, change);
 
-  /// Create a copy of Standings
+  /// Create a copy of StandingsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StandingsImplCopyWith<_$StandingsImpl> get copyWith =>
-      __$$StandingsImplCopyWithImpl<_$StandingsImpl>(this, _$identity);
+  _$$StandingsModelImplCopyWith<_$StandingsModelImpl> get copyWith =>
+      __$$StandingsModelImplCopyWithImpl<_$StandingsModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$StandingsImplToJson(
+    return _$$StandingsModelImplToJson(
       this,
     );
   }
@@ -239,7 +224,6 @@ class _$StandingsImpl implements _Standings {
     return StandingsEntity(
       id: id,
       cohortSemester: cohortSemester,
-      rank: rank,
       studentId: studentId,
       average: average,
       change: change,
@@ -247,24 +231,21 @@ class _$StandingsImpl implements _Standings {
   }
 }
 
-abstract class _Standings implements StandingsModel {
-  const factory _Standings(
+abstract class _StandingsModel implements StandingsModel {
+  const factory _StandingsModel(
       {required final int id,
       required final String cohortSemester,
-      required final int rank,
       required final String studentId,
       required final double average,
-      required final int change}) = _$StandingsImpl;
+      required final int change}) = _$StandingsModelImpl;
 
-  factory _Standings.fromJson(Map<String, dynamic> json) =
-      _$StandingsImpl.fromJson;
+  factory _StandingsModel.fromJson(Map<String, dynamic> json) =
+      _$StandingsModelImpl.fromJson;
 
   @override
   int get id;
   @override
   String get cohortSemester;
-  @override
-  int get rank;
   @override
   String get studentId;
   @override
@@ -272,10 +253,10 @@ abstract class _Standings implements StandingsModel {
   @override
   int get change;
 
-  /// Create a copy of Standings
+  /// Create a copy of StandingsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StandingsImplCopyWith<_$StandingsImpl> get copyWith =>
+  _$$StandingsModelImplCopyWith<_$StandingsModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

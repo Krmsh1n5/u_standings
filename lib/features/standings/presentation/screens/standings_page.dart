@@ -232,7 +232,7 @@ class _StandingsPageState extends State<StandingsPage> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          item.rank.toString(),
+                          '${index + 1}',
                           style: CustomTextStyles.bodyMediumOnSurface16,
                         ),
                       ),
