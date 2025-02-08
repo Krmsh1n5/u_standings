@@ -125,10 +125,10 @@ class UStandingsApi {
       double knownCredits = jsonData is double ? jsonData : double.tryParse(jsonData.toString()) ?? 0.0;
       return knownCredits;
       } else {
-        throw Exception('Failed to load cohortSemesters data. Status code: ${response.statusCode}');
+        throw Exception('Failed to load knownCredits data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to load cohortSemesters data');
+      throw Exception('Failed to load knownCredits data');
     }
     // // Simulate a network delay
     // await Future.delayed(Duration(seconds: 1));

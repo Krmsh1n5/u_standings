@@ -21,17 +21,20 @@ class _StandingsPageState extends State<StandingsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
-      await Provider.of<StandingsNotifier>(context, listen: false)
-          .loadAvailableCohortsSemesters();
-      await Provider.of<StandingsNotifier>(context, listen: false)
-          .loadCredits();
-      await Provider.of<StandingsNotifier>(context, listen: false)
-          .loadStandings();
 
-      setState(() {
-        isDataReady = true;
-      });
+    final standingsNotifier =
+        Provider.of<StandingsNotifier>(context, listen: false);
+
+    Future.microtask(() async {
+      await standingsNotifier.loadAvailableCohortsSemesters();
+      await standingsNotifier.loadCredits();
+      await standingsNotifier.loadStandings();
+
+      if (mounted) {
+        setState(() {
+          isDataReady = true;
+        });
+      }
     });
   }
 

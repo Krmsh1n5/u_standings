@@ -11,6 +11,8 @@ class GetTotalCohortSemesterCreditsUseCase {
       totalCredits += exam.credits;
     }
 
+    totalCredits = double.parse(totalCredits.toStringAsFixed(3));
+
     return totalCredits;
   }
 }

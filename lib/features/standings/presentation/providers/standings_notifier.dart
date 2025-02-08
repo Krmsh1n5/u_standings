@@ -43,7 +43,7 @@ class StandingsNotifier extends ChangeNotifier {
     try {
       knownCredits = await getKnownCreditsUseCase(selectedCohortSemester!);
       totalCohortSemesterCredits =
-          await getTotalCohortSemesterCreditsUseCase(selectedCohortSemester!);
+           getTotalCohortSemesterCreditsUseCase(selectedCohortSemester!);
       notifyListeners();
     } catch (e) {
       debugPrint('Error in loadCredits for $selectedCohortSemester: $e');
